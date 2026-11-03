@@ -1,0 +1,38 @@
+name: Build Persian ELM327 Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: دریافت کد پروژه
+        uses: actions/checkout@v4
+      - name: آماده‌سازی Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: آماده‌سازی Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+      - name: آماده‌سازی Android SDK
+        uses: android-actions/setup-android@v3
+      - name: نصب ابزارهای Android SDK
+        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+      - name: ساخت APK
+        run: gradle --no-daemon clean assembleDebug
+      - name: بارگذاری فایل APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: persian-elm327-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
