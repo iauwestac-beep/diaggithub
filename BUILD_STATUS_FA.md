@@ -6,3 +6,12 @@
 - هسته Kotlin شامل مدل‌ها، فرهنگ کدهای خطا و رمزگشای OBD با `kotlinc` کامپایل شده و آزمون‌های خودکار نمونه‌ای آن موفق بوده‌اند.
 - فایل APK در این محیط ساخته نشده است؛ Android SDK و دریافت وابستگی‌های Gradle در دسترس نبود. برای تولید APK، پوشه `android-app` را در Android Studio باز و Gradle Sync را اجرا کنید، سپس از مسیر `Build > Build APK(s)` خروجی بگیرید.
 - اتصال فیزیکی به خودرو و آداپتور ELM327 در این محیط قابل آزمایش نبود؛ آزمون نهایی سخت‌افزاری باید روی گوشی و خودرو انجام شود.
+
+
+## اصلاحات این نسخه
+
+- مسیر اجرای فرمان‌های Gradle در GitHub Actions به پوشه `android-app/` تنظیم شد؛ فایل‌های Gradle داخل این پوشه هستند و اجرای Build از ریشه مخزن باعث می‌شد Gradle پروژه را پیدا نکند.
+- مسیر Artifact خروجی APK نیز با ساختار واقعی مخزن هماهنگ شد: `android-app/app/build/outputs/apk/debug/app-debug.apk`.
+- نسخه Gradle Wrapper روی `8.13` و نسخه Android Gradle Plugin روی `8.13.2` است؛ این دو نسخه با هم هماهنگ‌اند.
+- کامپایل فایل‌های هسته Kotlin (`DtcCatalog`, `ObdModels`, `ObdDecoder`) در محیط بررسی با موفقیت انجام شد.
+- ساخت کامل APK در این محیط تأیید نشده است، چون Android SDK و Gradle اجرایی نصب نیستند؛ تأیید نهایی باید با اجرای GitHub Actions یا Android Studio انجام شود.
